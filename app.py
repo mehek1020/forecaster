@@ -1,6 +1,7 @@
 import pandas as pd
 import firebase_admin
 from firebase_admin import credentials, firestore, auth
+
 from joblib import load
 import streamlit as st
 from datetime import datetime, timedelta
@@ -21,8 +22,13 @@ except ValueError:
 # Initialize Firestore
 db = firestore.client()
 
-# Load your trained ARIMA model
-model = load("arima_model2.pkl")
+
+try:
+    model = load("arima_model2.pkl")
+    print("Model loaded successfully:", model)
+except Exception as e:
+    print("Error loading model:", e)
+
 
 # Preprocess the data for ARIMA model
 def preprocess_firebase_data_for_arima(firebase_data):
