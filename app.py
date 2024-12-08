@@ -7,18 +7,12 @@ from datetime import datetime, timedelta
 import numpy as np
 from statsmodels.tsa.arima.model import ARIMA
 
-# Access Firebase credentials from Streamlit secrets
-cred_dict = st.secrets["firebase_credentials"]
-
-# Initialize Firebase
-cred = credentials.Certificate(cred_dict)
-
+# Firebase Initialization
+cred = credentials.Certificate(r"C:\Users\acer\Desktop\MCA\semester3\forecaster\budgettracker-bfe03-firebase-adminsdk-z4ul9-6b6a597bd0.json")
 try:
     firebase_admin.initialize_app(cred)
 except ValueError:
     pass  # Prevent reinitialization if the app is already initialized
-
-# Initialize Firestore
 db = firestore.client()
 
 # Load your trained ARIMA model
