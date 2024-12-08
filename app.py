@@ -110,9 +110,7 @@ if st.button("Login"):
             preprocessed_data = preprocess_firebase_data_for_arima(firebase_data)
 
             # Display preprocessed data for debugging
-            st.write("Preprocessed Data:")
-            st.write(preprocessed_data)
-
+           
             if not preprocessed_data.empty:
                 # Group by date and sum the amount for daily expenditure
                 daily_expenditure = preprocessed_data.groupby('Date')['amount'].sum().reset_index()  # Change 'Amount' to 'amount'
