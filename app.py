@@ -25,12 +25,21 @@ db = firestore.client()
 model_url = st.secrets["cloud_storage"]["https://drive.google.com/file/d/1y2unLlyoX5nLaATIHJVQbPqw0ZbgRKtF/view?usp=drive_linkl"]
 response = requests.get(model_url)
 
-# Save the model temporarily
-with open("arima_model2.pkl", "wb") as f:
-    f.write(response.content)
+# Download and load the model
+def load_model_from_url(url):
+    try:
+        response = requests.get(url, stream=True)
+        response.raise_for_status()  # Raise an error for failed requests
+        with open("arima_model.pkl", "wb") as model_file:
+            for chunk in response.iter_content(chunk_size=8192):
+                model_file.write(chunk)
+        return joblib.load("arima_model.pkl")
+    except Exception as e:
+        st.error(f"Error loading model: {e}")
+        st.stop()
 
-# Load the model
-model = load("arima_model2.pkl")
+# Attempt to load the model
+model = load_model_from_url(model_url)
 
 # Preprocess the data for ARIMA model
 def preprocess_firebase_data_for_arima(firebase_data):
