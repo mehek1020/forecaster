@@ -4,3 +4,4 @@
 /forecasting_model.pkl
 /kill_me.pkl
 /transactions.csv
+/secrets.toml
