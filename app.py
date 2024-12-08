@@ -1,6 +1,7 @@
 import pandas as pd
 import firebase_admin
 from firebase_admin import credentials, firestore, auth
+import joblib
 from joblib import load
 import streamlit as st
 from datetime import datetime, timedelta
@@ -22,18 +23,21 @@ except ValueError:
 
 # Initialize Firestore
 db = firestore.client()
-model_url = st.secrets["cloud_storage"]["model_url"]
-response = requests.get(model_url)
 
+
+# Fetch model URL from Streamlit secrets
+model_url = st.secrets["cloud_storage"]["model_url"]
 
 # Download and load the model
 def load_model_from_url(url):
     try:
         response = requests.get(url, stream=True)
         response.raise_for_status()  # Raise an error for failed requests
+        # Save the model temporarily
         with open("arima_model2.pkl", "wb") as model_file:
             for chunk in response.iter_content(chunk_size=8192):
                 model_file.write(chunk)
+        # Load and return the model
         return joblib.load("arima_model2.pkl")
     except Exception as e:
         st.error(f"Error loading model: {e}")
@@ -41,6 +45,7 @@ def load_model_from_url(url):
 
 # Attempt to load the model
 model = load_model_from_url(model_url)
+
 
 # Preprocess the data for ARIMA model
 def preprocess_firebase_data_for_arima(firebase_data):
