@@ -6,6 +6,8 @@ import streamlit as st
 from datetime import datetime, timedelta
 import numpy as np
 from statsmodels.tsa.arima.model import ARIMA
+import os
+import requests
 
 # Access Firebase credentials from Streamlit secrets
 cred_dict = dict(st.secrets["firebase"])
@@ -21,7 +23,15 @@ except ValueError:
 # Initialize Firestore
 db = firestore.client()
 
-# Load your trained ARIMA model
+model_url = st.secrets["cloud_storage"]["https://drive.google.com/file/d/1y2unLlyoX5nLaATIHJVQbPqw0ZbgRKtF/view?usp=drive_linkl"]
+response = requests.get(model_url)
+
+# Save the model temporarily
+with open("arima_model2.pkl", "wb") as f:
+    f.write(response.content)
+
+# Load the model
+model = load("arima_model2.pkl")
 model = load("arima_model2.pkl")
 
 # Preprocess the data for ARIMA model
