@@ -22,8 +22,9 @@ except ValueError:
 
 # Initialize Firestore
 db = firestore.client()
-model_url = st.secrets["cloud_storage"]["https://drive.google.com/uc?id=1y2unLlyoX5nLaATIHJVQbPqw0ZbgRKtF&export=download"]
+model_url = st.secrets["cloud_storage"]["model_url"]
 response = requests.get(model_url)
+
 
 # Download and load the model
 def load_model_from_url(url):
