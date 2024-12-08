@@ -31,7 +31,6 @@ with open("arima_model2.pkl", "wb") as f:
 
 # Load the model
 model = load("arima_model2.pkl")
-model = load("arima_model2.pkl")
 
 # Preprocess the data for ARIMA model
 def preprocess_firebase_data_for_arima(firebase_data):
