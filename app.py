@@ -22,7 +22,7 @@ except ValueError:
 db = firestore.client()
 
 # Load your trained ARIMA model
-model = load(r"C:\Users\acer\Desktop\MCA\semester3\forecaster\arima_model2.pkl")  # Replace with actual ARIMA model path
+model = load("arima_model2.pkl")
 
 # Preprocess the data for ARIMA model
 def preprocess_firebase_data_for_arima(firebase_data):
