@@ -8,7 +8,7 @@ import numpy as np
 from statsmodels.tsa.arima.model import ARIMA
 
 # Access Firebase credentials from Streamlit secrets
-cred_dict = st.secrets["firebase"]
+cred_dict = dict(st.secrets["firebase"])
 
 # Initialize Firebase
 cred = credentials.Certificate(cred_dict)
