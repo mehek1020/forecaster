@@ -30,10 +30,10 @@ def load_model_from_url(url):
     try:
         response = requests.get(url, stream=True)
         response.raise_for_status()  # Raise an error for failed requests
-        with open("arima_model.pkl", "wb") as model_file:
+        with open("arima_model2.pkl", "wb") as model_file:
             for chunk in response.iter_content(chunk_size=8192):
                 model_file.write(chunk)
-        return joblib.load("arima_model.pkl")
+        return joblib.load("arima_model2.pkl")
     except Exception as e:
         st.error(f"Error loading model: {e}")
         st.stop()
